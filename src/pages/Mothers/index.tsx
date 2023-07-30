@@ -29,29 +29,31 @@ const Mothers = () => {
         return (page - 1) * 10 + index + 1;
     };
     return (
-        <div className={"w-full px-10 py-3"}>
-            <table className={"w-full text-sm text-left"}>
-                {
-                    data?.data?.length > 0 ? (
-                        <>
-                            <thead
-                                className="text-xs text-gray-500 uppercase bg-slate-500 dark:text-gray-400 rounded-lg">
-                            <tr>
-                                <th scope="col" className="px-6 py-3">
-                                    No.
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Name
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Link
-                                </th>
-                            </tr>
-                            </thead>
+        <div className={"w-full h-full "}>
+            <div className={"mt-10 h-[80%] w-full p-5"}>
+                <Link to={ROUTES.addMother} className={"bg-blue-500 px-5 py-2 text-white rounded-lg "}>Add mother</Link>
+                <table className={"w-full h-full text-sm text-left mt-5"}>
+                    <thead
+                        className="text-xs text-gray-500 uppercase bg-slate-500 dark:text-gray-400 rounded-lg">
+                    <tr>
+                        <th scope="col" className="px-6 py-3">
+                            No.
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Name
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Link
+                        </th>
+                    </tr>
+                    </thead>
+                    {
+                        data?.data?.length > 0 ? (
                             <tbody>
                             {
                                 data?.data?.map((el: MotherRequest, index: number) => (
-                                    <tr className={"border-b bg-gray-800 text-gray-300 hover:bg-gray-600"} key={el.id}>
+                                    <tr className={"border-b bg-gray-800 text-gray-300 hover:bg-gray-600"}
+                                        key={el.id}>
                                         <td className={"px-5"}>{getMotherIndex(index)}</td>
                                         <td className={"px-5 py-3"}>{el.name}</td>
                                         <td>
@@ -61,37 +63,37 @@ const Mothers = () => {
                                 ))
                             }
                             </tbody>
-                        </>
-                    ) : (
-                        <div>
-                            <p>
-                                Mother are empty
-                            </p>
-                        </div>
-                    )
-                }
-                {
-                    data && (
-                        <div className={"flex mt-5"}>
-                            {
-                                page !== 1 && (
-                                    <button
-                                        className={`bg-gray-700 px-5 py-1 ${page !== data?.last_page ? "rounded-l-lg" : "rounded-lg"} text-gray-300 flex justify-start`}
-                                        onClick={goToPreviousPage}>Previous page</button>
-                                )
-                            }
-                            {
-                                page !== data?.last_page && (
-                                    <button
-                                        className={`bg-gray-700 px-5 py-1 ${page !== 1 ? "rounded-r-lg" : "rounded-lg"} text-gray-300 justify-end`}
-                                        onClick={goToNextPage} disabled={page === data.last_page}>Next page
-                                    </button>
-                                )
-                            }
-                        </div>
-                    )
-                }
-            </table>
+                        ) : (
+                            <div>
+                                <p>
+                                    Mother are empty
+                                </p>
+                            </div>
+                        )
+                    }
+                    {
+                        data && (
+                            <div className={"flex mt-5"}>
+                                {
+                                    page !== 1 && (
+                                        <button
+                                            className={`bg-gray-700 px-5 py-1 ${page !== data?.last_page ? "rounded-l-lg" : "rounded-lg"} text-gray-300 flex justify-start`}
+                                            onClick={goToPreviousPage}>Previous page</button>
+                                    )
+                                }
+                                {
+                                    page !== data?.last_page && (
+                                        <button
+                                            className={`bg-gray-700 px-5 py-1 ${page !== 1 ? "rounded-r-lg" : "rounded-lg"} text-gray-300 justify-end`}
+                                            onClick={goToNextPage} disabled={page === data.last_page}>Next page
+                                        </button>
+                                    )
+                                }
+                            </div>
+                        )
+                    }
+                </table>
+            </div>
         </div>
     );
 };

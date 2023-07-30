@@ -23,8 +23,9 @@ const Infants = () => {
     }
     const getInfantIndex = (index: number) => (page - 1) * 10 + index + 1
     return (
-        <div className={"w-full px-10 py-3"}>
-            <table className={"w-full text-sm text-left text-gray-300"}>
+        <div className={"h-full w-full px-10 py-3"}>
+            <Link to={ROUTES.addInfants} className={"bg-blue-500 px-5 py-2 text-white rounded-lg "}>Add infants</Link>
+            <table className={"w-full text-sm text-left text-gray-300 mt-5"}>
                 {
                     data?.data?.length > 0 ? (
                         <>
