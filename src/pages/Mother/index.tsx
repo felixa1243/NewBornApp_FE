@@ -7,14 +7,19 @@ import {ROUTES} from '../../common/constants/routes';
 const Mother = () => {
     const {id} = useParams();
     const navigate = useNavigate();
-
-    const {data, isLoading, isError} = useQuery('getById', () => {
+    const today = new Date();
+    const {data, isLoading, isError} = useQuery('getById', async () => {
         if (id) {
-            return MotherService.findById(id);
+            return await MotherService.findById(id);
         }
         return Promise.resolve(null);
     });
-
+    const birthday = new Date(data?.data?.birth_day)
+    let age = today.getFullYear() - birthday.getFullYear()
+    const m = today.getMonth() - birthday.getMonth()
+    if (m < 0 || (m == 0 && today.getDate() < birthday.getDate())) {
+        age--
+    }
     const mutation = useMutation('deleteData', {
         mutationFn: () => {
             if (id) {
@@ -49,23 +54,24 @@ const Mother = () => {
 
     return (
         <div>
-            <Link to={ROUTES.mothers}>
-                {
-                    "<=back"
-                }
+            <Link to={ROUTES.mothers} className={"flex gap-1 mb-5"}>
+                <p>&larr;</p> <p>Back</p>
             </Link>
             {
-                data?.data ? (
+                data?.data && (
                     <div>
-                        {data?.data?.id} <br/>
-                        {data?.data?.name}
-                        <button
-                            className={"bg-red-500"}
-                            onClick={() => mutation.mutate()}>Delete data
-                        </button>
-                    </div>
-                ) : (
-                    <div>
+                        <p>Name: {data?.data?.name}</p>
+                        <p>Age: {age}</p>
+                        <div className={"flex gap-1 mt-5"}>
+                            <button
+                                className={"bg-rose-600 px-3 py-1 rounded-md text-white"}
+                                onClick={() => mutation.mutate()}>Delete data
+                            </button>
+                            <button
+                                className={"bg-blue-600 px-3 py-1 rounded-md text-white"}
+                                onClick={() => console.log("update")}>Update Data
+                            </button>
+                        </div>
                     </div>
                 )
             }

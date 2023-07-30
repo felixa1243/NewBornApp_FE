@@ -1,8 +1,6 @@
-export function addDecimalSeparator(number: number): string {
-    const numberStr: string = number.toString();
-
-    if (numberStr.includes(',')) {
-        return numberStr.replace(',', '.');
+export function decimalFormater(number: string): string {
+    if (number.includes('.')) {
+        return number.replace('.', ',');
     }
-    return numberStr;
+    return number;
 }

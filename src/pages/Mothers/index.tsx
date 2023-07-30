@@ -7,7 +7,7 @@ import {useState} from "react";
 type MotherRequest = {
     "id": string,
     "name": string,
-    "birth_day": "string"
+    "birth_day": string
 };
 
 const Mothers = () => {
@@ -30,65 +30,68 @@ const Mothers = () => {
     };
     return (
         <div className={"w-full px-10 py-3"}>
-            {
-                data?.data?.length > 0 ? (
-                    <table className={"w-full text-sm text-left  dark:text-gray-400"}>
-                        <thead className="text-xs text-gray-500 uppercase bg-slate-500 dark:text-gray-400 rounded-lg">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
-                                No.
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Name
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Link
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            data?.data?.map((el: MotherRequest, index: number) => (
-                                <tr className={"border-b bg-gray-800 hover:"} key={el.id}>
-                                    <td className={"px-5"}>{getMotherIndex(index)}</td>
-                                    <td className={"px-5 py-3"}>{el.name}</td>
-                                    <td>
-                                        <Link to={ROUTES.mothers + "/" + el.id}>View More</Link>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                        </tbody>
-                    </table>
-                ) : (
-                    <div>
-                        <p>
-                            Mother are empty
-                        </p>
-                    </div>
-                )
-            }
-            {
-                data && (
-                    <div className={"flex mt-5"}>
-                        {
-                            page !== 1 && (
-                                <button
-                                    className={`bg-gray-700 px-5 py-1 ${page !== data?.last_page ?"rounded-l-lg" :"rounded-lg"} text-gray-300 flex justify-start`}
-                                    onClick={goToPreviousPage}>Previous page</button>
-                            )
-                        }
-                        {
-                            page !== data?.last_page && (
-                                <button
-                                    className={`bg-gray-700 px-5 py-1 ${page !== 1 ? "rounded-r-lg" : "rounded-lg"} text-gray-300 justify-end`}
-                                    onClick={goToNextPage} disabled={page === data.last_page}>Next page
-                                </button>
-                            )
-                        }
-                    </div>
-                )
-            }
+            <table className={"w-full text-sm text-left"}>
+                {
+                    data?.data?.length > 0 ? (
+                        <>
+                            <thead
+                                className="text-xs text-gray-500 uppercase bg-slate-500 dark:text-gray-400 rounded-lg">
+                            <tr>
+                                <th scope="col" className="px-6 py-3">
+                                    No.
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Name
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Link
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                data?.data?.map((el: MotherRequest, index: number) => (
+                                    <tr className={"border-b bg-gray-800 text-gray-300 hover:bg-gray-600"} key={el.id}>
+                                        <td className={"px-5"}>{getMotherIndex(index)}</td>
+                                        <td className={"px-5 py-3"}>{el.name}</td>
+                                        <td>
+                                            <Link to={ROUTES.mothers + "/" + el.id}>View More</Link>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                            </tbody>
+                        </>
+                    ) : (
+                        <div>
+                            <p>
+                                Mother are empty
+                            </p>
+                        </div>
+                    )
+                }
+                {
+                    data && (
+                        <div className={"flex mt-5"}>
+                            {
+                                page !== 1 && (
+                                    <button
+                                        className={`bg-gray-700 px-5 py-1 ${page !== data?.last_page ? "rounded-l-lg" : "rounded-lg"} text-gray-300 flex justify-start`}
+                                        onClick={goToPreviousPage}>Previous page</button>
+                                )
+                            }
+                            {
+                                page !== data?.last_page && (
+                                    <button
+                                        className={`bg-gray-700 px-5 py-1 ${page !== 1 ? "rounded-r-lg" : "rounded-lg"} text-gray-300 justify-end`}
+                                        onClick={goToNextPage} disabled={page === data.last_page}>Next page
+                                    </button>
+                                )
+                            }
+                        </div>
+                    )
+                }
+            </table>
         </div>
     );
 };
