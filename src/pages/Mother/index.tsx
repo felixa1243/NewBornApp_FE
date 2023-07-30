@@ -3,6 +3,7 @@ import {Link, useNavigate, useParams} from 'react-router-dom';
 import {useMutation, useQuery} from 'react-query';
 import {MotherService} from '../../services/Mothers';
 import {ROUTES} from '../../common/constants/routes';
+import {formatDate} from "../../utils/dateFormat";
 
 const Mother = () => {
     const {id} = useParams();
@@ -62,6 +63,7 @@ const Mother = () => {
                     <div>
                         <p>Name: {data?.data?.name}</p>
                         <p>Age: {age}</p>
+                        <p>Birth day: {formatDate(data?.data?.birth_day)}</p>
                         <div className={"flex gap-1 mt-5"}>
                             <button
                                 className={"bg-rose-600 px-3 py-1 rounded-md text-white"}
@@ -69,7 +71,7 @@ const Mother = () => {
                             </button>
                             <button
                                 className={"bg-blue-600 px-3 py-1 rounded-md text-white"}
-                                onClick={() => console.log("update")}>Update Data
+                                onClick={() => navigate(ROUTES.updateMother)}>Update Data
                             </button>
                         </div>
                     </div>

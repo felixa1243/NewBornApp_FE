@@ -14,6 +14,7 @@ export const InfantsService = {
         const {data} = await api.delete("infants/" + id)
         return {data}
     },
+    updateInfants: async (id: string | undefined, data) => await api.put("/infants/" + id, data),
     getAnalytics: async (year: string) => {
         const {data} = await api.get("infants/analytics?year=" + year)
         return data

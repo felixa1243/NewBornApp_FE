@@ -1,10 +1,24 @@
-import {Link, useParams} from "react-router-dom";
-import {useQuery} from "react-query";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {useMutation, useQuery} from "react-query";
 import {ROUTES} from "../../common/constants/routes";
 import {InfantsService} from "../../services/Infants";
+import {useEffect} from "react";
 
 const Infant = () => {
     const {id} = useParams();
+    const navigate = useNavigate()
+    const mutation = useMutation("deleteInfant", async () => {
+        if (id) {
+            return await InfantsService.deleteInfants(id)
+        }
+        return Promise.resolve(null)
+    })
+    useEffect(() => {
+        if (mutation.isSuccess) {
+            alert("delete data success")
+            navigate(ROUTES.infants)
+        }
+    }, [mutation.isSuccess])
     const {data, isLoading, isError} = useQuery("getByid", async () => {
         if (id) {
             return await InfantsService.findById(id)
@@ -64,8 +78,14 @@ const Infant = () => {
                             </tbody>
                         </table>
                         <div className={"flex flex-row-reverse gap-1 mt-5"}>
-                            <button className={"px-3 py-1 bg-blue-600 text-white rounded-lg"}>Update Infant</button>
-                            <button className={"px-3 py-1 bg-red-600 text-white rounded-lg"}>Delete Infant</button>
+                            <button
+                                onClick={() => navigate(ROUTES.updateInfants + "/" + id)}
+                                className={"px-3 py-1 bg-blue-600 text-white rounded-lg"}>Update Infant
+                            </button>
+                            <button
+                                onClick={() => mutation.mutate()}
+                                className={"px-3 py-1 bg-red-600 text-white rounded-lg"}>Delete Infant
+                            </button>
                         </div>
                     </div>
                 )
